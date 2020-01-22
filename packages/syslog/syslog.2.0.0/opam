@@ -13,12 +13,25 @@ homepage: "http://github.com/geneanet/ocaml-syslog"
 dev-repo: "git://github.com/geneanet/ocaml-syslog"
 bug-reports: "https://github.com/geneanet/ocaml-syslog/issues"
 
-license: "LGPL-2.0-or-later"
+license: "LGPL"
 
-build: [ "dune" "build" ]
+build: [
+  ["dune" "subst"] {pinned}
+  [
+    "dune"
+    "build"
+    "-p"
+    name
+    "-j"
+    jobs
+    "@install"
+    "@runtest" {with-test}
+    "@doc" {with-doc}
+  ]
+]
 
 depends: [
-  "dune"
+  "dune" { build }
   "ocaml" {>= "4.03.0"}
 ]
 url {
